@@ -66,21 +66,33 @@ export const WORD_BANK: Record<Category, string[]> = {
 
 export const CATEGORIES = Object.keys(WORD_BANK) as Category[];
 
-export function getRandomWord(usedWords: Set<string>, preferredCategory: string): { word: string; category: Category } {
+export function getRandomWord(usedWords: Set<string>, preferredCategories: string[] = []): { word: string; category: Category } {
   let cats = [...CATEGORIES].sort(() => Math.random() - 0.5);
-  if (preferredCategory && preferredCategory !== "Random" && CATEGORIES.includes(preferredCategory as Category)) {
-    cats = [preferredCategory as Category, ...cats];
+  
+  // If multiple categories selected, randomly pick one of them to prioritize
+  if (preferredCategories && preferredCategories.length > 0) {
+    const validPrefs = preferredCategories.filter(c => CATEGORIES.includes(c as Category)) as Category[];
+    if (validPrefs.length > 0) {
+      // Prioritize the selected categories randomly, then append the rest as fallback
+      const shuffledPrefs = validPrefs.sort(() => Math.random() - 0.5);
+      cats = [...shuffledPrefs, ...cats.filter(c => !shuffledPrefs.includes(c))];
+    }
   }
+
   for (const cat of cats) {
     const pool = WORD_BANK[cat].filter((w) => !usedWords.has(w));
     if (pool.length > 0) {
       return { word: pool[Math.floor(Math.random() * pool.length)], category: cat };
     }
   }
-  // exhausted — reset
-  const cat = (preferredCategory && preferredCategory !== "Random" && CATEGORIES.includes(preferredCategory as Category))
-    ? preferredCategory as Category
-    : CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+  // exhausted — reset and just pull entirely randomly from the preferred list if available
+  let cat: Category = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+  if (preferredCategories && preferredCategories.length > 0) {
+    const validPrefs = preferredCategories.filter(c => CATEGORIES.includes(c as Category)) as Category[];
+    if (validPrefs.length > 0) {
+      cat = validPrefs[Math.floor(Math.random() * validPrefs.length)];
+    }
+  }
   const pool = WORD_BANK[cat];
   return { word: pool[Math.floor(Math.random() * pool.length)], category: cat };
 }

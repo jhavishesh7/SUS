@@ -47,7 +47,7 @@ export interface GameState {
   players: Player[];
   mode: Mode;
   impostorCount: number;
-  selectedCategory: string;
+  selectedCategories: string[];
   word: string | null;
   category: string;
   revealIndex: number; // which player is currently looking at their card
@@ -84,7 +84,7 @@ export function useGame() {
     players: defaultPlayers(5),
     mode: "Classic",
     impostorCount: 1,
-    selectedCategory: "Random",
+    selectedCategories: [],
     word: null,
     category: "",
     revealIndex: 0,
@@ -123,7 +123,14 @@ export function useGame() {
 
   const setMode = (mode: Mode) => setState((s) => ({ ...s, mode }));
   const setImpostorCount = (n: number) => setState((s) => ({ ...s, impostorCount: n }));
-  const setSelectedCategory = (cat: string) => setState((s) => ({ ...s, selectedCategory: cat }));
+  const toggleCategory = (cat: string) => setState((s) => {
+    if (s.selectedCategories.includes(cat)) {
+      return { ...s, selectedCategories: s.selectedCategories.filter((c) => c !== cat) };
+    } else {
+      return { ...s, selectedCategories: [...s.selectedCategories, cat] };
+    }
+  });
+  const clearCategories = () => setState((s) => ({ ...s, selectedCategories: [] }));
 
   const startGame = useCallback(async () => {
     setState((s) => ({ ...s, loading: true }));
@@ -135,7 +142,7 @@ export function useGame() {
       const res = await fetch("/api/generate-word", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ avoid, mode: state.mode, category: state.selectedCategory }),
+        body: JSON.stringify({ avoid, mode: state.mode, categories: state.selectedCategories }),
       });
       if (res.ok) {
         const data = (await res.json()) as { word?: string | null; category?: string };
@@ -147,7 +154,7 @@ export function useGame() {
     } catch { /* fallback below */ }
 
     if (!word) {
-      const fb = getRandomWord(usedRef.current, state.selectedCategory);
+      const fb = getRandomWord(usedRef.current, state.selectedCategories);
       word = fb.word;
       category = fb.category;
     }
@@ -213,7 +220,7 @@ export function useGame() {
         loading: false,
       };
     });
-  }, [state.mode]);
+  }, [state.mode, state.selectedCategories]);
 
   const nextReveal = () =>
     setState((s) => {
@@ -299,7 +306,7 @@ export function useGame() {
 
   return {
     state,
-    setPlayerCount, setPlayerName, setMode, setImpostorCount, setSelectedCategory,
+    setPlayerCount, setPlayerName, setMode, setImpostorCount, toggleCategory, clearCategories,
     startGame, nextReveal, skipToVote, castVote, resolveVote, nextRound, reset,
   };
 }

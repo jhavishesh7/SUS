@@ -26,16 +26,17 @@ export const Route = createFileRoute("/api/generate-word")({
           });
         }
 
-        const body: Body = await request.json().catch(() => ({}));
-        const avoid = Array.isArray(body.avoid) ? body.avoid.slice(0, 50) : [];
-        const mode = typeof body.mode === "string" ? body.mode : "Classic";
-        const category = typeof body.category === "string" && body.category !== "Random" 
-          ? body.category 
-          : "a fresh desi topic";
+        const { avoid = [], mode = "Classic", categories = [] } = (await request.json().catch(() => ({}))) as {
+          avoid?: string[];
+          mode?: string;
+          categories?: string[];
+        };
 
-        const userMsg = `Mode: ${mode}. Category: ${category}.
+        const categoryString = categories && categories.length > 0 ? categories.join(" OR ") : "Random/Any";
+
+        const userMsg = `Mode: ${mode}. Category/Categories: ${categoryString}.
 Avoid these recent words (don't repeat or near-duplicate): ${avoid.join(", ") || "(none)"}
-Pick a word from the requested category. Be punchy.`;
+Pick a word from the requested category/categories. Be punchy.`;
 
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
           method: "POST",

@@ -111,14 +111,24 @@ export function Setup({ game }: { game: ReturnType<typeof useGame> }) {
         </div>
 
         <div>
-          <label className="text-xs uppercase tracking-wider text-muted-foreground">Category</label>
+          <label className="text-xs uppercase tracking-wider text-muted-foreground">Categories (Select Multiple)</label>
           <div className="mt-2 flex flex-wrap gap-2">
-            {["Random", ...CATEGORIES].map((c) => (
+            <button
+              onClick={() => game.clearCategories()}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition active:scale-95 ${
+                state.selectedCategories.length === 0
+                  ? "bg-gradient-hero text-primary-foreground shadow-neon"
+                  : "glass text-foreground hover:bg-secondary/60"
+              }`}
+            >
+              Random (All)
+            </button>
+            {CATEGORIES.map((c) => (
               <button
                 key={c}
-                onClick={() => game.setSelectedCategory(c)}
+                onClick={() => game.toggleCategory(c)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition active:scale-95 ${
-                  state.selectedCategory === c
+                  state.selectedCategories.includes(c)
                     ? "bg-gradient-hero text-primary-foreground shadow-neon"
                     : "glass text-foreground hover:bg-secondary/60"
                 }`}
