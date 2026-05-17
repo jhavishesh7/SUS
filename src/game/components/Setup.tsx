@@ -15,7 +15,7 @@ export function Setup({ game }: { game: ReturnType<typeof useGame> }) {
           <span className="h-2 w-2 rounded-full bg-neon-magenta animate-pulse" />
           Bhai kaun sus hai?
         </div>
-        <h1 className="font-display text-7xl md:text-8xl text-gradient-hero leading-none">
+        <h1 className="font-display text-6xl sm:text-7xl md:text-8xl text-gradient-hero leading-none">
           SUS<span className="text-neon-cyan">.</span>
         </h1>
         <p className="text-muted-foreground">
@@ -78,13 +78,13 @@ export function Setup({ game }: { game: ReturnType<typeof useGame> }) {
 
         <div>
           <label className="text-xs uppercase tracking-wider text-muted-foreground">Player Names</label>
-          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 gap-2">
             {state.players.map((p, i) => (
               <input
                 key={p.id}
                 value={p.name}
                 onChange={(e) => setPlayerName(p.id, e.target.value.slice(0, 14))}
-                className="rounded-xl bg-input/60 px-3 py-2 text-sm outline-none ring-1 ring-border focus:ring-2 focus:ring-primary transition"
+                className="w-full rounded-xl bg-input/60 px-3 py-3 text-sm outline-none ring-1 ring-border focus:ring-2 focus:ring-primary transition"
                 placeholder={`P${i + 1}`}
               />
             ))}

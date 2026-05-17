@@ -24,7 +24,7 @@ export function Discussion({ game }: { game: ReturnType<typeof useGame> }) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
         {alive.map((p) => (
           <div key={p.id} className="glass rounded-2xl p-4 text-center">
             <div className="font-display text-2xl">{p.name}</div>

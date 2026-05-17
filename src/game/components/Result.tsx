@@ -13,7 +13,7 @@ export function Result({ game }: { game: ReturnType<typeof useGame> }) {
           <div className="grid h-32 w-32 place-items-center rounded-full bg-gradient-danger shadow-[0_0_50px_oklch(0.65_0.27_25/0.6)] animate-pulse-neon">
             <Skull className="h-16 w-16 text-destructive-foreground" />
           </div>
-          <div className="font-display text-5xl text-destructive">{e.name}</div>
+          <div className="font-display text-4xl sm:text-5xl text-destructive">{e.name}</div>
           <div className="text-xl">
             {e.isImpostor ? (
               <span className="text-neon-lime">tha ek IMPOSTOR! 🎯</span>
@@ -24,7 +24,7 @@ export function Result({ game }: { game: ReturnType<typeof useGame> }) {
           <div className="glass rounded-2xl px-5 py-3 text-sm italic">"{roast}"</div>
         </div>
       ) : (
-        <div className="font-display text-4xl text-gradient-hero animate-rise">
+        <div className="font-display text-3xl sm:text-4xl text-gradient-hero animate-rise">
           TIE! Koi nahi gaya 🤝
         </div>
       )}

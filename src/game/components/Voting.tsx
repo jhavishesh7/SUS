@@ -37,7 +37,7 @@ export function Voting({ game }: { game: ReturnType<typeof useGame> }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 sm:grid-cols-3">
         {alive.filter((p) => p.id !== voter.id).map((p) => (
           <button
             key={p.id}

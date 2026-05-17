@@ -40,7 +40,7 @@ export function Reveal({ game }: { game: ReturnType<typeof useGame> }) {
             <div className="grid h-24 w-24 place-items-center rounded-full bg-gradient-danger shadow-[0_0_40px_oklch(0.65_0.27_25_/_0.6)] animate-pulse-neon">
               <Eye className="h-10 w-10 text-destructive-foreground" />
             </div>
-            <div className="font-display text-5xl text-destructive">IMPOSTOR</div>
+            <div className="font-display text-4xl sm:text-5xl text-destructive">IMPOSTOR</div>
             <div className="text-sm text-muted-foreground max-w-xs">
               Word nahi pata. Bhai blend in kar, kuch generic bol. Mat fatne dena.
             </div>
@@ -51,7 +51,7 @@ export function Reveal({ game }: { game: ReturnType<typeof useGame> }) {
         ) : (
           <div className="flex flex-col items-center gap-3 text-center">
             <div className="text-xs uppercase tracking-widest text-neon-cyan">Your secret word</div>
-            <div className="font-display text-5xl text-gradient-hero break-words leading-tight">
+            <div className="font-display text-4xl sm:text-5xl text-gradient-hero break-words leading-tight">
               {state.word}
             </div>
             <div className="rounded-xl bg-accent/20 px-4 py-2 text-xs uppercase tracking-wider text-accent">

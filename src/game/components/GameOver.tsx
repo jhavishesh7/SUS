@@ -14,7 +14,7 @@ export function GameOver({ game }: { game: ReturnType<typeof useGame> }) {
       <div className="animate-flip-in">
         <Trophy className="mx-auto h-20 w-20 text-neon-saffron drop-shadow-[0_0_30px_oklch(0.82_0.19_60/0.6)]" />
       </div>
-      <h2 className="font-display text-6xl text-gradient-hero">
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-gradient-hero">
         {crewWon ? "CREWMATES JEET GAYE!" : "IMPOSTORS WIN!"}
       </h2>
       <p className="text-muted-foreground">
