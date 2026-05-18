@@ -7,6 +7,7 @@ import { Discussion } from "@/game/components/Discussion";
 import { Voting } from "@/game/components/Voting";
 import { Result } from "@/game/components/Result";
 import { GameOver } from "@/game/components/GameOver";
+import { PWAInstallPrompt } from "@/game/components/PWAInstallPrompt";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,6 +26,7 @@ function Index() {
       {phase === "voting" && <Voting game={game} />}
       {phase === "result" && <Result game={game} />}
       {phase === "gameover" && <GameOver game={game} />}
+      <PWAInstallPrompt />
     </main>
   );
 }

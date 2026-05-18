@@ -312,7 +312,7 @@ export function useGame() {
 }
 
 function defaultPlayers(n: number): Player[] {
-  const sampleNames = ["Rohit", "Priya", "Aarav", "Sneha", "Bilal", "Anish", "Tara", "Kabir", "Sita", "Yash", "Zara", "Ravi", "Nisha", "Ali", "Aanya"];
+  const sampleNames = ["vishesh", "krishna", "krish", "eshan", "aashish", "Rohit", "Priya", "Aarav", "Sneha", "Bilal", "Anish", "Tara", "Kabir", "Sita", "Yash", "Zara", "Ravi", "Nisha", "Ali", "Aanya"];
   return Array.from({ length: n }, (_, i) => ({
     id: i,
     name: sampleNames[i] ?? `Player ${i + 1}`,
